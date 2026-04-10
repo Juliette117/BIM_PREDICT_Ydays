@@ -1,0 +1,106 @@
+<main class="home-page">
+  <section class="hero-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <div class="brand-copy">
+          <strong>BIM</strong>
+          <span>PREDICT</span>
+        </div>
+      </div>
+
+      <div class="status-pills">
+        <span
+          class="status-pill"
+          [class.is-ready]="clientStatus().configured"
+          [class.is-pending]="!clientStatus().configured"
+        >
+          Firebase web {{ clientStatus().configured ? 'pret' : 'a configurer' }}
+        </span>
+        <span
+          class="status-pill"
+          [class.is-ready]="backendState().data?.status === 'ok'"
+          [class.is-pending]="backendState().loading"
+          [class.is-danger]="!!backendState().error"
+        >
+          @if (backendState().loading) {
+            API Nest verification...
+          } @else if (backendState().error) {
+            API Nest indisponible
+          } @else {
+            API Nest operationnelle
+          }
+        </span>
+      </div>
+    </header>
+
+    <div class="hero-card">
+      <p class="eyebrow">Evaluation BIM</p>
+      <h1>Evaluez la maturite BIM de votre entreprise</h1>
+      <p class="hero-copy">
+        BIM PREDICT vous permet d evaluer rapidement et precisement votre niveau de maturite BIM,
+        d obtenir un score detaille et des recommandations utiles pour accelerer votre progression.
+      </p>
+
+      <div class="cta-row">
+        <a class="button is-link is-medium cta-button" href="#features">
+          Commencez l evaluation
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="health-note">
+        <div>
+          <span class="health-label">Frontend</span>
+          <strong>{{ clientStatus().message }}</strong>
+        </div>
+        <div>
+          <span class="health-label">Backend</span>
+          <strong>
+            {{
+              backendState().error
+                ? backendState().error
+                : (backendState().data?.firebaseAdmin?.message ?? 'En attente de verification')
+            }}
+          </strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section" id="features">
+    <div class="columns is-variable is-5">
+      @for (feature of features; track feature.title) {
+        <div class="column">
+          <article class="feature-card">
+            <div class="feature-icon">{{ feature.icon }}</div>
+            <h2>{{ feature.title }}</h2>
+            <p>{{ feature.copy }}</p>
+          </article>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="reasons-panel">
+    <p class="panel-heading">Pourquoi evaluer votre maturite BIM ?</p>
+
+    <div class="columns is-multiline is-variable is-5">
+      @for (reason of reasons; track reason.title) {
+        <div class="column is-half">
+          <article class="reason-item">
+            <div class="reason-bullet" aria-hidden="true">✓</div>
+            <div>
+              <h3>{{ reason.title }}</h3>
+              <p>{{ reason.copy }}</p>
+            </div>
+          </article>
+        </div>
+      }
+    </div>
+  </section>
+</main>

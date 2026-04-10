@@ -1,0 +1,11 @@
+# Dependances installees localement
+node_modules/
+
+# Fichiers generes par le build NestJS
+dist/
+
+# Rapports de couverture de tests
+coverage/
+
+# Variables d environnement locales
+.env
